@@ -5,7 +5,12 @@ const mongoose = require('mongoose');
 const app = require('./app');
 
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/student-management';
+// require DB URL only from env; do NOT fall back to a hardcoded URI
+const MONGO_URI = process.env.MONGO_URI;
+if (!MONGO_URI) {
+    console.error('Missing MONGO_URI environment variable. Set it in .env or your environment and restart.');
+    process.exit(1);
+}
 
 let server;
 
